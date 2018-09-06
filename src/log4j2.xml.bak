@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="error">
+	<Properties>
+		<Property name="log_home">/Users/liujingbo/Documents/Developer/web/logs</Property>
+	</Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss,SSS} [%p] %c{1}%x - %m%n"/>
+        </Console>
+        <RollingRandomAccessFile name="asserver" immediateFlush="false" fileName="${log_home}/asserver.log"
+                     filePattern="${log_home}/asserver.log.%-d{yyyy-MM-dd-HH}">
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss,SSS} %x - %m%n"/>
+            <Policies>
+            	<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="net.sf.json.JSONObject" level="error" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="asserver"/>
+        </Logger>
+        <Root level="info">
+        	<AppenderRef ref="console"/>
+        	<AppenderRef ref="asserver"/>
+        </Root>
+    </Loggers>
+</Configuration>

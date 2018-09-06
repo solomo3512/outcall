@@ -1,0 +1,90 @@
+package com.psyb.service.blackWord.dao;
+
+import java.util.List;
+
+import com.psyb.service.blackWord.po.BlackWordsInfo;
+import com.psyb.service.common.exception.CCPDaoException;
+
+/**
+ * 黑词管理接口
+ * @Title：IBlackWordDao 
+ * @author:maliang
+ * @date:2017年2月23日下午2:03:45
+ */
+public interface IBlackWordDao {
+
+	/**
+	 * 新增黑词
+	 * @param blackWords
+	 * @param wordType
+	 * @throws CCPDaoException
+	 */
+	public void addBlackWord(String blackWords,String wordType)throws CCPDaoException;
+	
+	/**
+	 * 修改黑词
+	 * @param id
+	 * @param blackWords
+	 * @param wordType
+	 * @throws CCPDaoException
+	 */
+	public void updateBlackWord(int id,String blackWords,String wordType)throws CCPDaoException;
+	
+	/**
+	 * 删除黑词
+	 * @param id
+	 * @throws CCPDaoException
+	 */
+	public void deleteBlackWord(int id)throws CCPDaoException;
+	
+	/**
+	 * 获取黑词列表
+	 * @return
+	 * @throws CCPDaoException
+	 */
+	public List<BlackWordsInfo> getBlackWordsList()throws CCPDaoException;
+	
+	/**
+	 * 增加白词
+	 * @param blackWords
+	 * @param wordType
+	 * @param accountSid
+	 * @throws CCPDaoException
+	 */
+	public void addWhiteWord(String blackWords,String wordType,String accountSid)throws CCPDaoException;
+	
+	/**
+	 * 更新白词
+	 * @param id
+	 * @param blackWords
+	 * @param wordType
+	 * @param accountSid
+	 * @throws CCPDaoException
+	 */
+	public void updateWhiteWord(int id,String blackWords,String wordType,String accountSid)throws CCPDaoException;
+	
+	/**
+	 * 查询主账号白词列表
+	 * @param accountSid
+	 * @return
+	 * @throws CCPDaoException
+	 */
+	public List<BlackWordsInfo> getWhiteWordsByAccountSid(String accountSid)throws CCPDaoException;
+	
+	/**
+	 * 检查黑词是否已存在
+	 * @param blackWords
+	 * @param wordType
+	 * @return
+	 */
+	public boolean checkBlackWordsByWord(String blackWords)throws CCPDaoException ;
+	
+	/**
+	 * 校验主账号下是否已存在该白词
+	 * @param blackWords
+	 * @param accountSid
+	 * @return
+	 * @throws CCPDaoException
+	 */
+	public boolean checkBlackWordsByWord(String blackWords,String accountSid)throws CCPDaoException ;
+}

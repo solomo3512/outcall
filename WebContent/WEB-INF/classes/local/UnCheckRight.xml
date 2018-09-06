@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UnCheckRight>
+	<right>/Upload/IpSpeed</right>
+	<right>/Upload/Log</right>
+	<right>/inner/</right>
+	<right>/ClientHistroyMsg</right>
+	<right>/RecentlyContactsList</right>
+	<right>/GetErrorDescribe</right>
+	<right>/ReloadErrorDescribe</right>
+	<right>/AuthCode</right>
+</UnCheckRight>

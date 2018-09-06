@@ -1,0 +1,116 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- database config -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/script/broker.properties</value>
+				<value>classpath:/script/redis.properties</value>
+				<value>classpath:/script/jdbc.properties</value>
+				<value>classpath:/script/zk.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSourceOne" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias" value="${master.proxool.alias}" />
+		<property name="driverUrl" value="${master.proxool.driver-url}" />
+		<property name="driver" value="${master.proxool.driver-class}" />
+		<property name="user" value="${master.proxool.username}" />
+		<property name="password" value="${master.proxool.password}" />
+		<property name="maximumConnectionCount" value="${master.proxool.maximum-connection-count}" />
+		<property name="simultaneousBuildThrottle" value="${master.proxool.simultaneous-build-throttle}" />
+		<property name="minimumConnectionCount" value="${master.proxool.minimum-connection-count}" />
+		<property name="prototypeCount" value="${master.proxool.prototype-count}" />
+		<property name="houseKeepingTestSql" value="${master.proxool.house-keeping-test-sql}" />
+		<property name="testBeforeUse" value="${master.proxool.test-before-use}" />
+		<property name="testAfterUse" value="${master.proxool.test-after-use}" />
+		<property name="delegateProperties" value="characterEncoding=${master.proxool.characterEncoding}" />
+		<property name="maximumActiveTime" value="${master.proxool.maximum-active-time}" />
+		<property name="maximumConnectionLifetime" value="${master.proxool.maximum-connection-lifetime}" />
+		<property name="houseKeepingSleepTime" value="${master.proxool.house-keeping-sleep-time}" />
+		<property name="statistics" value="${master.proxool.statistics}" />
+		<property name="statisticsLogLevel" value="${master.proxool.statistics-log-level}" />
+	</bean>
+
+	<bean id="dataSourceTwo" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias" value="${slave.proxool.alias}" />
+		<property name="driverUrl" value="${slave.proxool.driver-url}" />
+		<property name="driver" value="${slave.proxool.driver-class}" />
+		<property name="user" value="${slave.proxool.username}" />
+		<property name="password" value="${slave.proxool.password}" />
+		<property name="maximumConnectionCount" value="${slave.proxool.maximum-connection-count}" />
+		<property name="simultaneousBuildThrottle" value="${slave.proxool.simultaneous-build-throttle}" />
+		<property name="minimumConnectionCount" value="${slave.proxool.minimum-connection-count}" />
+		<property name="prototypeCount" value="${slave.proxool.prototype-count}" />
+		<property name="houseKeepingTestSql" value="${slave.proxool.house-keeping-test-sql}" />
+		<property name="testBeforeUse" value="${slave.proxool.test-before-use}" />
+		<property name="testAfterUse" value="${slave.proxool.test-after-use}" />
+		<property name="delegateProperties" value="characterEncoding=${slave.proxool.characterEncoding}" />
+		<property name="maximumActiveTime" value="${slave.proxool.maximum-active-time}" />
+		<property name="maximumConnectionLifetime" value="${slave.proxool.maximum-connection-lifetime}" />
+		<property name="houseKeepingSleepTime" value="${slave.proxool.house-keeping-sleep-time}" />
+		<property name="statistics" value="${slave.proxool.statistics}" />
+		<property name="statisticsLogLevel" value="${slave.proxool.statistics-log-level}" />
+	</bean>
+
+	<bean id="dataSourceThree" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias" value="${ccp.proxool.alias}" />
+		<property name="driverUrl" value="${ccp.proxool.driver-url}" />
+		<property name="driver" value="${ccp.proxool.driver-class}" />
+		<property name="user" value="${ccp.proxool.username}" />
+		<property name="password" value="${ccp.proxool.password}" />
+		<property name="maximumConnectionCount" value="${ccp.proxool.maximum-connection-count}" />
+		<property name="simultaneousBuildThrottle" value="${ccp.proxool.simultaneous-build-throttle}" />
+		<property name="minimumConnectionCount" value="${ccp.proxool.minimum-connection-count}" />
+		<property name="prototypeCount" value="${ccp.proxool.prototype-count}" />
+		<property name="houseKeepingTestSql" value="${ccp.proxool.house-keeping-test-sql}" />
+		<property name="testBeforeUse" value="${ccp.proxool.test-before-use}" />
+		<property name="testAfterUse" value="${ccp.proxool.test-after-use}" />
+		<property name="delegateProperties" value="characterEncoding=${ccp.proxool.characterEncoding}" />
+		<property name="maximumActiveTime" value="${ccp.proxool.maximum-active-time}" />
+		<property name="maximumConnectionLifetime" value="${ccp.proxool.maximum-connection-lifetime}" />
+		<property name="houseKeepingSleepTime" value="${ccp.proxool.house-keeping-sleep-time}" />
+		<property name="statistics" value="${ccp.proxool.statistics}" />
+		<property name="statisticsLogLevel" value="${ccp.proxool.statistics-log-level}" />
+	</bean>
+	
+	<bean id="dynamicDataSource" class="org.ming.sample.mysql.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry value-ref="dataSourceOne" key="DB_MASTER"></entry>
+				<!--<entry value-ref="dataSourceTwo" key="DB_SLAVE"></entry>  -->
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSourceOne" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		  class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
+	
+	<bean id="ccpJdbcTemplate"
+		  class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceThree" />
+	</bean>
+	
+	 
+</beans>

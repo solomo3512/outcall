@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GeneralConfig>
+	<!-- FILESERVER服务器序号5位数字组成：生产最小为56001开始依次递增 -->
+	<fileserial>56001</fileserial>
+	
+	<!-- 上传文件大小限制 -->
+	<max_upload_file>104857600</max_upload_file>
+	
+	<!-- 保存上传文件本地路径 -->
+	<upload_file_path>/app/fileserver_${fileserial}\test2</upload_file_path>
+	
+	<!-- 上传日志文件本地路径 -->
+	<upload_log_file_path>/app/fileserver_${fileserial}\test2\test3</upload_log_file_path>
+	
+	<!-- 上传IP测速文件本地路径 -->
+	<upload_ip_speed_file_path>/app/fileserver_${fileserial}\test2\test3</upload_ip_speed_file_path>
+	
+	<!-- 生成服务器配置文件地址 -->
+	<generate_server_addrs>/app/fileserver_${fileserial}\serverAddrs</generate_server_addrs>
+	
+	<!-- 上传VTM文件地址 -->
+	<vtm_upload_path>/app/fileserver_${fileserial}\test2\test3</vtm_upload_path>
+	
+	<!-- apache下载IP -->
+	<apache_download_ip>http://123.56.149.246:8888</apache_download_ip>
+	
+	<!-- 最大高（宽）缩放后的像素 -->
+	<scale_pix>120</scale_pix>
+	
+	<!-- IM队列名称 -->
+	<im_queue_name>YTX_IM_QUEUE</im_queue_name>
+	
+	<!-- MCM队列名称 -->
+	<mcm_queue_name>YTX_MCM_QUEUE</mcm_queue_name>
+	
+	<!-- 本机IP -->
+	<local_ip>192.168.178.78</local_ip>
+
+	<!--环境配置 1 沙盒 2 生产-->
+	<environment_setting>1</environment_setting>
+</GeneralConfig>

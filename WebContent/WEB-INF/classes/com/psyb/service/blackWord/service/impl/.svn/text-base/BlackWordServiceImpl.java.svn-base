@@ -1,0 +1,207 @@
+package com.hisunsray.api2013.blackWord.service.impl;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hisunsray.api2013.blackWord.dao.IBlackWordDao;
+import com.hisunsray.api2013.blackWord.form.BlackReq;
+import com.hisunsray.api2013.blackWord.form.BlackResp;
+import com.hisunsray.api2013.blackWord.service.IBlackWordService;
+import com.hisunsray.api2013.common.Constants;
+import com.hisunsray.api2013.common.ScriptManager;
+import com.hisunsray.api2013.common.blackword.BlackWordHelper;
+import com.hisunsray.api2013.common.exception.CCPDaoException;
+import com.hisunsray.api2013.common.exception.CCPServiceException;
+import com.hisunsray.api2013.common.util.StringUtil;
+/**
+ * 黑词管理
+ * @Title：BlackWordServiceImpl 
+ * @author:maliang
+ * @date:2017年2月23日下午2:10:14
+ */
+@Service
+public class BlackWordServiceImpl implements IBlackWordService {
+
+	private Logger logger = LogManager.getLogger(BlackWordServiceImpl.class);
+	
+	@Autowired
+	private IBlackWordDao blackWordDao;
+	@Autowired
+	private BlackWordHelper loadBlackSerice;
+	
+	/**
+	 * 黑白词管理
+	 */
+	@Override
+	public BlackResp manageBlackWord(BlackReq req) throws CCPServiceException,
+			CCPDaoException {
+		String id=req.getId();
+		String cmdType=req.getCmdType();
+		String blackWords=req.getWords();
+		String accountSid=req.getAccountSid();
+		String wordType=req.getWordType();
+		
+		logger.info("基本参数校验.");
+		
+		if(StringUtil.isEmpty(wordType)){
+			throw new CCPServiceException(ScriptManager.buildError("113506"));
+		}
+		
+		if(StringUtil.isEmpty(cmdType)){
+			throw new CCPServiceException(ScriptManager.buildError("113500"));
+		}
+		//处理黑词
+		if(Constants.BALCK_WORDS_TYPE.equals(wordType)){
+			logger.info("start deal balck words.");
+			try{
+				//添加黑词
+			if(Constants.BALCK_WORDS_ADD.equals(cmdType)){
+				logger.info("start deal add balck words.");
+				if(StringUtil.isEmpty(blackWords)){
+					throw new CCPServiceException(ScriptManager.buildError("113502"));
+				}
+				
+				if(StringUtil.length(blackWords) >100 ){
+					throw new CCPServiceException(ScriptManager.buildError("113505"));
+				}
+				if(!blackWordDao.checkBlackWordsByWord(blackWords)){
+					try{
+						blackWordDao.addBlackWord(blackWords,wordType);
+					}catch(Exception e){
+						//容错处理，有可能数据已经存在
+						boolean flag=blackWordDao.checkBlackWordsByWord(blackWords);
+						if(flag){
+							logger.info("the blackWord is have in db:{}",blackWords);
+						}else{
+							throw new CCPServiceException(ScriptManager.buildError("113509"));
+						}
+					}
+				}else{
+					logger.info("the blackWord is have in db:{}",blackWords);
+				}
+			}else if(Constants.BALCK_WORDS_MODIFY.equals(cmdType)){//修改黑词
+				logger.info("start deal modify balck words.");
+				
+				if(StringUtil.isEmpty(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113503"));
+				}
+				
+				if(!StringUtil.isNumeric(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113504"));
+				}
+				
+				if(StringUtil.isEmpty(blackWords)){
+					throw new CCPServiceException(ScriptManager.buildError("113502"));
+				}
+				
+				if(StringUtil.length(blackWords) >100 ){
+					throw new CCPServiceException(ScriptManager.buildError("113505"));
+				}
+				
+				blackWordDao.updateBlackWord(Integer.parseInt(id), blackWords,wordType);
+				
+			}else if(Constants.BALCK_WORDS_DELETE.equals(cmdType)){//删除黑词
+				logger.info("start deal delete balck words.");
+				
+				if(StringUtil.isEmpty(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113503"));
+				}
+				
+				if(!StringUtil.isNumeric(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113504"));
+				}
+				
+				blackWordDao.deleteBlackWord(Integer.parseInt(id));
+			}else{
+				logger.info("cmdType :{} error.",cmdType);
+				throw new CCPServiceException(ScriptManager.buildError("113501"));
+			}
+			}finally{
+				//刷新黑词缓存
+				loadBlackSerice.reloadBlackWord();
+			}
+			
+		}else if(Constants.WHITE_WORDS_TYPE.equals(wordType)){//处理白词
+			logger.info("start deal white words.");
+			if(Constants.BALCK_WORDS_ADD.equals(cmdType)){//添加白词
+				logger.info("start deal add white words.");
+				if(StringUtil.isEmpty(blackWords)){
+					throw new CCPServiceException(ScriptManager.buildError("113502"));
+				}
+				
+				if(StringUtil.length(blackWords) >100 ){
+					throw new CCPServiceException(ScriptManager.buildError("113505"));
+				}
+				
+				if(StringUtil.isEmpty(accountSid)){
+					throw new CCPServiceException(ScriptManager.buildError("113508"));
+				}
+				if(!blackWordDao.checkBlackWordsByWord(blackWords, accountSid)){
+					try{
+					blackWordDao.addWhiteWord(blackWords,wordType,accountSid);
+					}catch(Exception e){
+						boolean flag=blackWordDao.checkBlackWordsByWord(blackWords, accountSid);
+						if(flag){
+							logger.info("the whiteWord is have in db:{}",blackWords);
+						}else{
+							throw new CCPServiceException(ScriptManager.buildError("113509"));
+						}
+					}
+				}else{
+					logger.info("the whiteWord is have in db:{}",blackWords);
+				}
+				
+			}else if(Constants.BALCK_WORDS_MODIFY.equals(cmdType)){//修改白词
+				logger.info("start deal modify white words.");
+				
+				if(StringUtil.isEmpty(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113503"));
+				}
+				
+				if(!StringUtil.isNumeric(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113504"));
+				}
+				
+				if(StringUtil.isEmpty(blackWords)){
+					throw new CCPServiceException(ScriptManager.buildError("113502"));
+				}
+				
+				if(StringUtil.length(blackWords) >100 ){
+					throw new CCPServiceException(ScriptManager.buildError("113505"));
+				}
+				
+				if(StringUtil.isEmpty(accountSid)){
+					throw new CCPServiceException(ScriptManager.buildError("113508"));
+				}
+				
+				blackWordDao.updateWhiteWord(Integer.parseInt(id), blackWords,wordType,accountSid);
+				
+			}else if(Constants.BALCK_WORDS_DELETE.equals(cmdType)){//删除白词
+				logger.info("start deal delete white words.");
+				
+				if(StringUtil.isEmpty(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113503"));
+				}
+				
+				if(!StringUtil.isNumeric(id)){
+					throw new CCPServiceException(ScriptManager.buildError("113504"));
+				}
+				
+				blackWordDao.deleteBlackWord(Integer.parseInt(id));
+			}else{
+				logger.info("cmdType :{} error.",cmdType);
+				throw new CCPServiceException(ScriptManager.buildError("113501"));
+			}
+		}else{
+			logger.info("wordType :{} error.",wordType);
+			throw new CCPServiceException(ScriptManager.buildError("113507"));
+		}
+		
+		return new BlackResp(Constants.SUCC,Constants.SUCC_MSG);
+	}
+
+	
+
+}

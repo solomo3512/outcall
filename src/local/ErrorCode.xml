@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ErrorCode>
+
+	<!-- 帐号(560000 - 560050) -->
+	<error code="560000">未知错误</error>
+	<error code="560001">HTTP请求方法不支持</error>
+	<error code="560002">请求地址Sig参数为空</error>
+	<error code="560003">请求地址Sig校验失败</error>
+	<error code="560004">公司ID不存在</error>
+	<error code="560005">HTTP Chunked 编码不支持</error>
+	<error code="560006">HTTP Content-Type 为空</error>
+	<error code="560007">HTTP Content-Length 为空</error>
+	<error code="560008">HTTP请求包体无法解析，请检查包体格式</error>
+	<error code="560009">HTTP断点续传包体格式错误</error>
+	<error code="560010">HTTP断点续传包体标识的字节长度与Content-Length不一致</error>
+	<error code="560011">HTTP Range 的开始字节或结束字节大于文件总大小</error>
+	<error code="560012">连接Cassandra失败</error>
+	<error code="560013">SQL语句执行失败</error><!-- 告警 -->
+	<error code="560014">数据库操作失败</error><!-- 告警 -->
+	<error code="560050"></error>
+	
+	<!-- 文件上传与下载(560051 - 560100) -->
+	<error code="560051">文件上传失败</error>
+	<error code="560052">文件上传token为空</error>
+	<error code="560053">文件上传文件大小超过限制</error>
+	<error code="560054">文件上传token已失效</error>
+	<error code="560055">配置文件下载失败</error>
+	<error code="560056">配置文件下载type为空</error>
+	<error code="560057">配置文件下载version为空</error>
+	<error code="560058">配置文件下载文件不存在</error>
+	<error code="560059">配置文件下载version不是数字</error>
+	<error code="560060">配置文件下载路径下版本号文件为空</error>
+	<error code="560061">配置文件下载当前版本为最新版本</error>
+	<error code="560062">日志上传请求参数appId为空</error>
+	<error code="560063">日志上传请求参数userName为空</error>
+	<error code="560064">日志上传请求参数fileName为空</error>
+	<error code="560065">日志上传请求参数appId不存在</error>
+	<error code="560066">文件上传包头扩展参数不存在</error>
+	<error code="560067">文件上传包头扩展参数中appId为空</error>
+	<error code="560068">文件上传包头扩展参数中msgFileName为空</error>
+	<error code="560069">文件上传包头扩展参数中msgSender为空</error>
+	<error code="560070">文件上传包头扩展参数中msgReceiver为空</error>
+	<error code="560071">文件上传包头扩展参数中msgType为空</error>
+	<error code="560072">文件上传发送者不在群组内</error>
+	<error code="560073">文件上传发送者被禁言</error>
+	<error code="560074">文件上传的扩展参数格式不正确</error>
+	<error code="560075">文件上传地址失效</error>
+	<error code="560077">多渠道文件上传参数msgSid为空</error>
+	<error code="560078">多渠道网关模块编号为空</error>
+	<error code="560079">生成服务器地址参数version为空</error>
+	<error code="560080">生成服务器地址参数IP为空</error>
+	<error code="560081">配置文件下载最新版本号为空</error>
+	<error code="560082">VTM请求参数callbackurl格式不正确</error>
+	<error code="560083">VTM请求callbackurl失败</error>
+	<error code="560084">上传文件名太长</error>
+	<error code="560085">文件上传中断</error>
+	<error code="560100"></error>
+	
+	<!-- 消息历史记录、上传用户设备(560101 - 560200) -->
+	<error code="560101">客户端获取历史消息记录请求参数为null</error>
+	<error code="560102">客户端获取历史消息记录请求参数appId为空</error>
+	<error code="560103">客户端获取历史消息记录请求参数userName为空</error>
+	<error code="560104">客户端获取历史消息记录请求参数talker为空</error>
+	<error code="560105">客户端获取历史消息记录为空</error>
+	<error code="560106">客户端获取历史消息记录超过90天</error>
+	
+	<error code="560107">数据层异常</error>
+	<error code="560108">业务层异常</error>
+	
+	<error code="560109">客户端获取最近联系人列表请求参数为null</error>
+	<error code="560110">客户端获取最近联系人列表请求参数appId为空</error>
+	<error code="560111">客户端获取最近联系人列表请求参数userName为空</error>
+	<error code="560117">客户端获取最近联系人为空</error>
+	
+	<error code="560112">获取错误码描述请求参数为null</error>
+	<error code="560113">获取错误码描述请求参数errorCode为空</error>
+	
+	<error code="560114">获取服务器校验码请求参数为null</error>
+	<error code="560115">获取服务器校验码请求参数appId为空</error>
+	<error code="560116">获取服务器校验码请求参数userName为空</error>
+	
+</ErrorCode>
